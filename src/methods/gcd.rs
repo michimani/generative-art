@@ -4,14 +4,17 @@ use std::time::SystemTime;
 
 static OUT_DIR: &str = "out/1_gcd";
 
-pub fn render() {
+pub fn render(sub_command: &str) {
     println!("two numbers for render image >)");
     input! {
       m: u64,
       n: u64,
     }
 
-    render_image_by_gcd(m, n);
+    match sub_command {
+        _ => render_by_gcd_simply(m, n),
+    }
+    render_by_gcd_simply(m, n);
 }
 
 const COLORS: [[u8; 3]; 8] = [
@@ -25,7 +28,7 @@ const COLORS: [[u8; 3]; 8] = [
     [247, 96, 161],
 ];
 
-fn render_image_by_gcd(m: u64, n: u64) {
+fn render_by_gcd_simply(m: u64, n: u64) {
     let scaler: u64;
 
     if m < 20 {
