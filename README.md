@@ -3,7 +3,7 @@ generative-art
 
 『数学から創るジェネラティブアート - Processing で学ぶ かたちのデザイン』で紹介されているコードを Rust で書いたもの。
 
-## 書籍情報
+# 書籍情報
 
 - [数学から創るジェネラティブアート ―Processingで学ぶかたちのデザイン](https://gihyo.jp/book/2019/978-4-297-10463-4)
 - 著者: 巴山竜来
@@ -12,6 +12,9 @@ generative-art
 - ISBN-10: 4297104636
 - ISBN-13: 978-4297104634
 
+# 描画技法とサンプル
+
+[METHODS.md](./METHODS.md)
 
 # License
 
