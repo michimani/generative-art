@@ -1,3 +1,5 @@
+mod images;
+mod methods;
 use std::env;
 
 fn main() {
@@ -8,6 +10,8 @@ fn main() {
 
 fn render(method: &str) {
     match method {
+        "gcd" => methods::gcd::render(),
+
         _ => println!("method {} is not found.", method),
     }
 }
