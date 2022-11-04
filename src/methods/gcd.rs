@@ -12,9 +12,9 @@ pub fn render(sub_command: &str) {
     }
 
     match sub_command {
+        "square" => render_by_gcd_square(m, n),
         _ => render_by_gcd_simply(m, n),
     }
-    render_by_gcd_simply(m, n);
 }
 
 const COLORS: [[u8; 3]; 8] = [
@@ -105,6 +105,84 @@ fn render_by_gcd_simply(m: u64, n: u64) {
         ),
         pixels,
         (img_x, img_y),
+    )
+    .unwrap();
+}
+
+fn render_by_gcd_square(m: u64, n: u64) {
+    static WIDTH: f64 = 500.0;
+
+    // let ratio: f64;
+    // if m > n {
+    //     ratio = n as f64 / m as f64;
+    // } else {
+    //     ratio = m as f64 / n as f64;
+    // }
+    let ratio = n as f64 / m as f64;
+
+    let mut x_pos = 0.0;
+    let mut y_pos = 0.0;
+    let mut iter = 0;
+
+    let img_x = WIDTH;
+    let img_y = WIDTH;
+    let mut pixels: Vec<[u8; 3]> = vec![[255, 255, 255]; img_x as usize * img_y as usize];
+
+    let mut sq_count = 1;
+    let mut wd = WIDTH;
+
+    while wd > 0.1 {
+        iter += 1;
+        if iter % 2 == 1 {
+            while x_pos + wd * ratio < WIDTH + 0.1 {
+                for y in (y_pos) as u64..(y_pos + wd) as u64 {
+                    for x in (x_pos) as u64..(x_pos + wd * ratio) as u64 {
+                        let idx = y as usize * img_x as usize + x as usize;
+                        pixels[idx] = COLORS[sq_count % COLORS.len()];
+                    }
+                }
+
+                println!(
+                    "({x_pos},{y_pos}) {sq_count} {:?}",
+                    COLORS[sq_count % COLORS.len()]
+                );
+
+                sq_count += 1;
+                x_pos += wd * ratio;
+            }
+            wd = WIDTH - x_pos;
+        } else {
+            while y_pos + wd / ratio < WIDTH + 0.1 {
+                for y in (y_pos) as u64..(y_pos + wd / ratio) as u64 {
+                    for x in (x_pos) as u64..(x_pos + wd) as u64 {
+                        let idx = y as usize * img_x as usize + x as usize;
+                        pixels[idx] = COLORS[sq_count % COLORS.len()];
+                    }
+                }
+
+                println!(
+                    "({x_pos},{y_pos}) {sq_count} {:?}",
+                    COLORS[sq_count % COLORS.len()]
+                );
+
+                sq_count += 1;
+                y_pos += wd / ratio;
+            }
+            wd = WIDTH - y_pos;
+        }
+    }
+
+    images::render::render(
+        &format!(
+            "{}/{}.jpg",
+            OUT_DIR,
+            SystemTime::now()
+                .duration_since(SystemTime::UNIX_EPOCH)
+                .unwrap()
+                .as_secs()
+        ),
+        pixels,
+        (img_x as usize, img_y as usize),
     )
     .unwrap();
 }
