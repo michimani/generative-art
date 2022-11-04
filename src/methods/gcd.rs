@@ -78,7 +78,7 @@ fn render_by_gcd_simply(m: u64, n: u64) {
                 for y in y_pos * scaler..(y_pos + width) * scaler {
                     for x in x_pos * scaler..(x_pos + width) * scaler {
                         let idx = y as usize * img_x + x as usize;
-                        pixels[idx] = COLORS[sq_count % 5];
+                        pixels[idx] = COLORS[sq_count % COLORS.len()];
                     }
                 }
 
